@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "387957162645",
+    "firebase_url": "https://laurageerarsfinalfinalapp.firebaseio.com",
+    "project_id": "laurageerarsfinalfinalapp",
+    "storage_bucket": "laurageerarsfinalfinalapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:387957162645:android:67dde7a3ea750eb4",
+        "android_client_info": {
+          "package_name": "com.example.laurageerars.laurageerarsfinalfinalapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "387957162645-35vev2vof3eaa0idebh8nbkocuc8bnlr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.laurageerars.laurageerarsfinalfinalapp",
+            "certificate_hash": "6efd00bdd42f9f3add3f0733b47f90dfc5176731"
+          }
+        },
+        {
+          "client_id": "387957162645-4qdjsr1nlal9ge309drg7i0krh5husp4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhRu3NaC5ABIPM6IksiXnTuIjr3v1pp-E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "387957162645-4qdjsr1nlal9ge309drg7i0krh5husp4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
