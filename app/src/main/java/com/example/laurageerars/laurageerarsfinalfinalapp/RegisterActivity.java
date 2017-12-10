@@ -53,19 +53,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         //checking if email field is empty
         if (TextUtils.isEmpty(email)) {
-            Toast.makeText(this,"Please enter your email!",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Vul een geldig emailadres in.",Toast.LENGTH_LONG).show();
             return;
         }
 
         //checking if password field is empty
         if (TextUtils.isEmpty(password)) {
-            Toast.makeText(this,"Please enter a password!",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Vul een wachtwoord in.",Toast.LENGTH_LONG).show();
             return;
         }
 
         //checking if password is longer than 6 characters
         if (password.length() < 6 ) {
-            Toast.makeText(this,"Please enter a password with more than 6 characters.",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Vul een wachtwoord in die bestaat uit minimaal 6 karakters.",Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -77,14 +77,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("Register successful", "createUserWithEmail:success");
-                            Toast.makeText(RegisterActivity.this,"Successfully registered!",Toast.LENGTH_LONG).show();
+                            Toast.makeText(RegisterActivity.this,"Succesvol geregistreerd!",Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                             startActivity(intent);
                         }
                         else {
                             // If sign in fails, display a message to the user.
                             Log.w("Register failure", "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(RegisterActivity.this, "Authentication failed.",
+                            Toast.makeText(RegisterActivity.this, "Er is iets foutgegaan met registreren.",
                                     Toast.LENGTH_SHORT).show();
                         }
 

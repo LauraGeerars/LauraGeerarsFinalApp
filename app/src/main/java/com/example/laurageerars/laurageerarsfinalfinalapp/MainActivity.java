@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -58,6 +59,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String email = emailField.getText().toString().trim();
         String password = passwordField.getText().toString().trim();
 
+        //checking if email field is empty
+        if (TextUtils.isEmpty(email)) {
+            Toast.makeText(this,"Vul een geldig emailadres in.",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        //checking if password field is empty
+        if (TextUtils.isEmpty(password)) {
+            Toast.makeText(this,"Vul een geldig wachtwoord in.",Toast.LENGTH_LONG).show();
+            return;
+        }
+
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -65,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("Log in successful", "signInWithEmail:success");
-                            Toast.makeText(MainActivity.this, "Log in successful!",
+                            Toast.makeText(MainActivity.this, "Succesvol ingelogd!",
                                     Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(MainActivity.this, HomepageActivity.class);
                             startActivity(intent);
@@ -74,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         else {
                             // If sign in fails, display a message to the user.
                             Log.w("Log in fail", "signInWithEmail:failure", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                            Toast.makeText(MainActivity.this, "Er is iets foutgegaan met inloggen.",
                                     Toast.LENGTH_SHORT).show();
                         }
 
