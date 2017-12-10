@@ -67,6 +67,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Log.d("Log in successful", "signInWithEmail:success");
                             Toast.makeText(MainActivity.this, "Log in successful!",
                                     Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(MainActivity.this, HomepageActivity.class);
+                            startActivity(intent);
                         }
 
                         else {

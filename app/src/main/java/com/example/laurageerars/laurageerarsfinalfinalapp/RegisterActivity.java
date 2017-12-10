@@ -78,6 +78,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("Register successful", "createUserWithEmail:success");
                             Toast.makeText(RegisterActivity.this,"Successfully registered!",Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                            startActivity(intent);
                         }
                         else {
                             // If sign in fails, display a message to the user.
