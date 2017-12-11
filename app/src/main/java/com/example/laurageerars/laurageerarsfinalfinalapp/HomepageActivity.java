@@ -1,5 +1,6 @@
 package com.example.laurageerars.laurageerarsfinalfinalapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 
 public class HomepageActivity extends AppCompatActivity {
     public ArrayList<String> listcollection = new ArrayList<String>();
+    public ArrayList<String> objectnumber = new ArrayList<String>();
     public ListView CollectionListView;
 
     @Override
@@ -37,7 +39,7 @@ public class HomepageActivity extends AppCompatActivity {
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://www.rijksmuseum.nl/api/nl/collection?key=e53vvaf0&format=json";
+        String url = "https://www.rijksmuseum.nl/api/nl/collection?key=e53vvaf0&format=json&type=schilderij";
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -52,6 +54,7 @@ public class HomepageActivity extends AppCompatActivity {
                             JSONArray collectionArray = newObject.getJSONArray("artObjects");
                             for (int i = 0; i < collectionArray.length(); i++) {
                                 addItem(collectionArray.getJSONObject(i).getString("title"));
+                                //System.out.println(objectnumber);
 
                             }
                             Adapter();
@@ -133,6 +136,7 @@ public class HomepageActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //gotoCategoryMenu(String.valueOf(adapterView.getItemAtPosition(i)));
+
 
             }
         });
