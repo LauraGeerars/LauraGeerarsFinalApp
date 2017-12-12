@@ -30,10 +30,7 @@ import java.util.ArrayList;
 
 public class HomepageActivity extends AppCompatActivity {
     public ArrayList<String> listcollection = new ArrayList<String>();
-    public ArrayList<String> objectnumber = new ArrayList<String>();
     public ListView CollectionListView;
-
-    String url = "https://www.rijksmuseum.nl/api/nl/collection?key=e53vvaf0&format=json&type=schilderij";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +57,6 @@ public class HomepageActivity extends AppCompatActivity {
                             for (int i = 0; i < collectionArray.length(); i++) {
                                 JSONObject jsonObject = collectionArray.getJSONObject(i);
                                 addItem(jsonObject.getString("title"));
-                                //addItem(jsonObject.getString("objectNumber"));
-                                //objectnumber.add(jsonObject.getString("objectNumber"));
-                                //System.out.println(objectnumber);
                                 savetoSharedPrefs(jsonObject.getString("title"), jsonObject.getString("objectNumber"));
 
                             }
@@ -108,7 +102,7 @@ public class HomepageActivity extends AppCompatActivity {
         CollectionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                // With use of objectNumber, new url can be made with additional information
+                // Title and objectnumber as shared preferences, so the url for extra info can be made and used in InfoActivity
                 SharedPreferences yourOrderPrefs = getApplicationContext().getSharedPreferences("title", MODE_PRIVATE);
                 String objectnumber = yourOrderPrefs.getString(String.valueOf(adapterView.getItemAtPosition(i)), null);
                 if (objectnumber != null) {
@@ -124,10 +118,10 @@ public class HomepageActivity extends AppCompatActivity {
         });
     }
 
+    // Function for going to next activity (InfoActivity)
     public void gotoInfoActivity(String InfoActivity){
         Intent intent = new Intent(this, InfoActivity.class);
         intent.putExtra("InfoActivity", InfoActivity);
-        //Intent.setData(Uri.parse(url));
         startActivity(intent);
     }
 

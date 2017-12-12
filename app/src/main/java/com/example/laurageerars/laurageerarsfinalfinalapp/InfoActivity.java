@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,7 +30,7 @@ import java.util.ArrayList;
 public class InfoActivity extends AppCompatActivity {
     public ArrayList<String> listinfo = new ArrayList<String>();
     public ArrayList<String> objectnumber = new ArrayList<String>();
-    public ListView CollectionListView;
+    //public ListView CollectionListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class InfoActivity extends AppCompatActivity {
         final TextView title = (TextView) findViewById(R.id.titel);
         final TextView beschrijving = (TextView) findViewById(R.id.beschrijving);
         final TextView maker = (TextView) findViewById(R.id.maker);
+        final ImageView image = (ImageView) findViewById(R.id.itemimage);
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -62,6 +65,15 @@ public class InfoActivity extends AppCompatActivity {
 
                             title.setText(artObject.getString("title"));
                             beschrijving.setText(artObject.getString("description"));
+
+                            JSONObject imageObject = artObject.getJSONObject("webImage");
+                            addImage(imageObject.getString("url"));
+                            //JSONObject makerObject = artObject.getJSONObject("principalMakers");
+                            //maker.setText(makerObject.getString("scLabelLine"));
+                            maker.setText(artObject.getString("principalOrFirstMaker"));
+
+
+
 
 
                         } catch (JSONException e) {
@@ -87,6 +99,12 @@ public class InfoActivity extends AppCompatActivity {
     public void addItem(String Item) {
 
         listinfo.add(Item);
+
+    }
+
+    public void addImage(String imageurl) {
+        ImageView image = (ImageView) findViewById(R.id.itemimage);
+        Picasso.with(this).load(imageurl).fit().into(image);
 
     }
 /*

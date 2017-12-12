@@ -51,10 +51,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
+        // Check if user is logged in (non-null), give toast en go to homepage
         FirebaseUser currentUser = mAuth.getCurrentUser();
-    }
 
+        if (currentUser != null) {
+
+            Toast.makeText(MainActivity.this, "You are logged in!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, HomepageActivity.class);
+            startActivity(intent);
+        }
+        // If user is not logged in, give toast en log in or create new account
+        else {
+
+            Toast.makeText(MainActivity.this, "You have to log in first.", Toast.LENGTH_SHORT).show();
+        }
+
+    }
     private void logIn() {
         String email = emailField.getText().toString().trim();
         String password = passwordField.getText().toString().trim();
