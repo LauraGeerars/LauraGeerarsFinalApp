@@ -9,18 +9,18 @@
     tools:context="com.example.laurageerars.laurageerarsfinalfinalapp.HomepageActivity">
 
     <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="94dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/rijkslogo"
         android:layout_width="match_parent"
-        android:layout_height="94dp"
-        android:orientation="vertical">
+        android:layout_height="116dp"
+        android:layout_margin="5dp"
+        app:srcCompat="@drawable/rijks" />
 
-        <ImageView
-            android:id="@+id/rijkslogo"
-            android:layout_width="match_parent"
-            android:layout_height="116dp"
-            android:layout_margin="5dp"
-            app:srcCompat="@drawable/rijks" />
-
-    </LinearLayout>
+</LinearLayout>
 
     <TextView
         android:layout_width="match_parent"

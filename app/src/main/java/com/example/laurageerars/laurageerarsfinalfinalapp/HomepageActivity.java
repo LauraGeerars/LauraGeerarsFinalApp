@@ -1,8 +1,11 @@
 package com.example.laurageerars.laurageerarsfinalfinalapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -30,6 +33,8 @@ public class HomepageActivity extends AppCompatActivity {
     public ArrayList<String> objectnumber = new ArrayList<String>();
     public ListView CollectionListView;
 
+    String url = "https://www.rijksmuseum.nl/api/nl/collection?key=e53vvaf0&format=json&type=schilderij";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +58,12 @@ public class HomepageActivity extends AppCompatActivity {
                             ArrayList<JSONObject> listcollection = new ArrayList<JSONObject>();
                             JSONArray collectionArray = newObject.getJSONArray("artObjects");
                             for (int i = 0; i < collectionArray.length(); i++) {
-                                addItem(collectionArray.getJSONObject(i).getString("title"));
+                                JSONObject jsonObject = collectionArray.getJSONObject(i);
+                                addItem(jsonObject.getString("title"));
+                                //addItem(jsonObject.getString("objectNumber"));
+                                //objectnumber.add(jsonObject.getString("objectNumber"));
                                 //System.out.println(objectnumber);
+                                savetoSharedPrefs(jsonObject.getString("title"), jsonObject.getString("objectNumber"));
 
                             }
                             Adapter();
@@ -76,57 +85,21 @@ public class HomepageActivity extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
-
-
-
-        /*
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Display the characters of the response string.
-                        //mTextView.setText("Response is: " + response);
-
-                        try {
-
-                            JSONObject newObject = (JSONObject) new JSONTokener(response).nextValue();
-                            ArrayList<JSONObject> listcollection = new ArrayList<JSONObject>();
-                            JSONArray collectionArray = newObject.getJSONArray("title");
-                            for (int i = 0; i < collectionArray.length(); i++) {
-                                listcollection.add(collectionArray.getJSONObject(i));
-                                test.setText(collectionArray.getJSONObject(i).getString("title"));
-                                //addItem(categoryArray.get(i).toString());
-                            }
-                            Adapter();
-
-                        } catch (JSONException e) {
-                            //mTextView.setText(e.toString());
-                            e.printStackTrace();
-
-
-                        }
-
-                    }
-
-
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //TextView.setText("That didn't work!");
-            }
-        });
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest);
-
-    }
-*/
         //function for adding item to list categories
         public void addItem(String Item){
 
             listcollection.add(Item);
 
         }
+
+    public void savetoSharedPrefs(String title, String objectnumber) {
+        SharedPreferences prefs = getSharedPreferences("title", MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+        prefsEditor.putString(title, objectnumber);
+        prefsEditor.commit();
+
+    }
+
 
     public void Adapter() {
         ListAdapter theAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listcollection);
@@ -135,11 +108,27 @@ public class HomepageActivity extends AppCompatActivity {
         CollectionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //gotoCategoryMenu(String.valueOf(adapterView.getItemAtPosition(i)));
+                // With use of objectNumber, new url can be made with additional information
+                SharedPreferences yourOrderPrefs = getApplicationContext().getSharedPreferences("title", MODE_PRIVATE);
+                String objectnumber = yourOrderPrefs.getString(String.valueOf(adapterView.getItemAtPosition(i)), null);
+                if (objectnumber != null) {
+                    String url = "https://www.rijksmuseum.nl/api/nl/collection/" + objectnumber +
+                            "?key=e53vvaf0&format=json";
+                    Log.d("url", url);
+                    gotoInfoActivity(url);
+
+                }
 
 
             }
         });
+    }
+
+    public void gotoInfoActivity(String InfoActivity){
+        Intent intent = new Intent(this, InfoActivity.class);
+        intent.putExtra("InfoActivity", InfoActivity);
+        //Intent.setData(Uri.parse(url));
+        startActivity(intent);
     }
 
 
