@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth;
@@ -25,6 +26,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     Button backButton;
     EditText emailField;
     EditText passwordField;
+
 
     //Register with help from: https://www.simplifiedcoding.net/android-firebase-tutorial-1/
 
@@ -41,6 +43,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         backButton  = (Button) findViewById(R.id.back_button);
         emailField = (EditText) findViewById(R.id.email);
         passwordField = (EditText) findViewById(R.id.password);
+
 
         //Fixing on click at buttons on page
         registerButton.setOnClickListener(this);
@@ -78,7 +81,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("Register successful", "createUserWithEmail:success");
                             Toast.makeText(RegisterActivity.this,"Succesvol geregistreerd!",Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                            Intent intent = new Intent(RegisterActivity.this, UsernameActivity.class);
                             startActivity(intent);
                         }
                         else {
@@ -101,7 +104,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 createUser();
                 break;
             case R.id.back_button:
-                startActivity(new Intent(this, MainActivity.class));
+                startActivity(new Intent(this, UsernameActivity.class));
                 break;
         }
 

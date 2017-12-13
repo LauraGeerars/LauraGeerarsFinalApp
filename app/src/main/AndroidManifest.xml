@@ -20,7 +20,10 @@
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".HomepageActivity" />
-        <activity android:name=".InfoActivity"></activity>
+        <activity android:name=".InfoActivity" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".Favoriet" />
+        <activity android:name=".UsernameActivity"></activity>
     </application>
 
 </manifest>

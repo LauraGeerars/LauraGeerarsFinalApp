@@ -1,17 +1,20 @@
 package com.example.laurageerars.laurageerarsfinalfinalapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -19,6 +22,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -27,21 +34,33 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class InfoActivity extends AppCompatActivity {
+public class InfoActivity extends AppCompatActivity implements View.OnClickListener {
     public ArrayList<String> listinfo = new ArrayList<String>();
-    public ArrayList<String> objectnumber = new ArrayList<String>();
+    //public ArrayList<String> objectnumber = new ArrayList<String>();
     //public ListView CollectionListView;
+
+    // Write a message to the database
+    private FirebaseAuth mAuth;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference mDatabase = database.getReference();
+    FirebaseUser currentUser;
+    String favoritetitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
-        final ListView InfoListView = (ListView) findViewById(R.id.ListViewCollection);
         final TextView test = (TextView) findViewById(R.id.test);
         final TextView title = (TextView) findViewById(R.id.titel);
         final TextView beschrijving = (TextView) findViewById(R.id.beschrijving);
         final TextView maker = (TextView) findViewById(R.id.maker);
         final ImageView image = (ImageView) findViewById(R.id.itemimage);
+        final Button favorietbutton = (Button) findViewById(R.id.favoriet);
+        final ImageView profiel = (ImageView) findViewById(R.id.profielfoto);
+
+        profiel.setOnClickListener(this);
+
+        mAuth = FirebaseAuth.getInstance();
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -49,7 +68,7 @@ public class InfoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String url = (String) intent.getStringExtra("InfoActivity");
 
-
+        favorietbutton.setOnClickListener(this);
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -63,7 +82,8 @@ public class InfoActivity extends AppCompatActivity {
 
                             JSONObject artObject = newObject.getJSONObject("artObject");
 
-                            title.setText(artObject.getString("title"));
+                            favoritetitle = artObject.getString("title");
+                            title.setText(favoritetitle);
                             beschrijving.setText(artObject.getString("description"));
 
                             JSONObject imageObject = artObject.getJSONObject("webImage");
@@ -94,35 +114,36 @@ public class InfoActivity extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
-
-    //function for adding item to list categories
-    public void addItem(String Item) {
-
-        listinfo.add(Item);
-
-    }
-
     public void addImage(String imageurl) {
         ImageView image = (ImageView) findViewById(R.id.itemimage);
         Picasso.with(this).load(imageurl).fit().into(image);
 
     }
-/*
-    public void Adapter() {
-        ListAdapter theAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listinfo);
-        ListView InfoListView = (ListView) findViewById(R.id.InfoViewCollection);
-        InfoListView.setAdapter(theAdapter);
-        InfoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //gotoInfoActivity(String.valueOf(adapterView.getItemAtPosition(i)));
 
 
 
 
-            }
-        });
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.profielfoto:
+                Intent intent = new Intent(this, ProfileActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.favoriet:
+                currentUser = mAuth.getCurrentUser();
+                //String title = titleview.getText().toString();
+                Favoriet favoriet = new Favoriet(favoritetitle);
+                mDatabase.child("favoriet").child(currentUser.getUid()).push().setValue(favoriet);
+                Toast.makeText(InfoActivity.this, "Schilderij toegevoegd aan favorieten!",
+                        Toast.LENGTH_SHORT).show();
+
+
+        }
+
+
     }
-    */
+
+
 }
 

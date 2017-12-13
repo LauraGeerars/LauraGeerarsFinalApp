@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,7 +29,7 @@ import org.json.JSONTokener;
 import java.util.ArrayList;
 
 
-public class HomepageActivity extends AppCompatActivity {
+public class HomepageActivity extends AppCompatActivity implements View.OnClickListener{
     public ArrayList<String> listcollection = new ArrayList<String>();
     public ListView CollectionListView;
 
@@ -38,6 +39,9 @@ public class HomepageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_homepage);
         final ListView CollectionListView = (ListView) findViewById(R.id.ListViewCollection);
         final TextView test = (TextView) findViewById(R.id.test);
+        final ImageView profiel = (ImageView) findViewById(R.id.profielfoto);
+
+        profiel.setOnClickListener(this);
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -123,6 +127,23 @@ public class HomepageActivity extends AppCompatActivity {
         Intent intent = new Intent(this, InfoActivity.class);
         intent.putExtra("InfoActivity", InfoActivity);
         startActivity(intent);
+    }
+    /*
+    public void ProfileClick(View view) {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
+    } */
+
+    //On click function for buttons
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.profielfoto:
+                Intent intent = new Intent(this, ProfileActivity.class);
+                startActivity(intent);
+                break;
+        }
+
     }
 
 

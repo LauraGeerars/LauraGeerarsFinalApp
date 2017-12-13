@@ -56,17 +56,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (currentUser != null) {
 
-            Toast.makeText(MainActivity.this, "You are logged in!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Ingelogd!", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(MainActivity.this, HomepageActivity.class);
             startActivity(intent);
         }
         // If user is not logged in, give toast en log in or create new account
         else {
 
-            Toast.makeText(MainActivity.this, "You have to log in first.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Er moet eerst worden ingelogd.", Toast.LENGTH_SHORT).show();
         }
 
     }
+
     private void logIn() {
         String email = emailField.getText().toString().trim();
         String password = passwordField.getText().toString().trim();
