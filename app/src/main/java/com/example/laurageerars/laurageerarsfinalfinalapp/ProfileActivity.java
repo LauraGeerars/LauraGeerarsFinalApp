@@ -34,6 +34,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_profile);
         final ImageView profiel = (ImageView) findViewById(R.id.profielfoto);
         final Button loguit = (Button) findViewById(R.id.logout_button);
+        final Button anderefavorieten = (Button) findViewById(R.id.otherfavoritesbutton);
 
         listViewFavoriet = (ListView) findViewById(R.id.favorietlijst);
         favorietList = new ArrayList<>();
@@ -41,6 +42,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         profiel.setOnClickListener(this);
         loguit.setOnClickListener(this);
+        anderefavorieten.setOnClickListener(this);
         //getFavorites();
     }
 
@@ -113,6 +115,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 Intent loguitintent = new Intent(this, MainActivity.class);
                 startActivity(loguitintent);
                 finish();
+            case R.id.otherfavoritesbutton:
+                Intent anderefavorietenintent = new Intent(this, OtherFavoritesActivity.class);
+                startActivity(anderefavorietenintent);
+
         }
 
     }

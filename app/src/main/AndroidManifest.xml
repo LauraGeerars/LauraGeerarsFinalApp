@@ -23,7 +23,8 @@
         <activity android:name=".InfoActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".Favoriet" />
-        <activity android:name=".UsernameActivity"></activity>
+        <activity android:name=".UsernameActivity" />
+        <activity android:name=".OtherFavoritesActivity"></activity>
     </application>
 
 </manifest>
