@@ -134,7 +134,7 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
                 currentUser = mAuth.getCurrentUser();
                 //String title = titleview.getText().toString();
                 Favoriet favoriet = new Favoriet(favoritetitle);
-                mDatabase.child("favoriet").child(currentUser.getUid()).push().setValue(favoriet);
+                mDatabase.child("favoriet").child(currentUser.getUid()).push().child(currentUser.getDisplayName()).setValue(favoriet);
                 Toast.makeText(InfoActivity.this, "Schilderij toegevoegd aan favorieten!",
                         Toast.LENGTH_SHORT).show();
 

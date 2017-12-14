@@ -14,4 +14,8 @@ public class Favoriet {
     public Favoriet(String title) {
         this.title = title;
     }
+
+    public String getTitle() {
+        return title;
+    }
 }
