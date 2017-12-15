@@ -12,5 +12,7 @@ Wanneer de gebruiker de knop aanklikt _"andere favorieten bekijken"_, verschijnt
 
 ![alt text](https://github.com/LauraGeerars/LauraGeerarsFinalApp/blob/master/Schermafdruk%202017-12-15%2020.53.12.png)
 
+De app is telkens gerund op de emulator, Nexus 4 API 22. 
+
 [![BCH compliance](https://bettercodehub.com/edge/badge/LauraGeerars/LauraGeerarsFinalApp?branch=master)](https://bettercodehub.com/)
 
