@@ -2,7 +2,7 @@
 ### Rijksmuseum app
 #### Laura Geerars
 
-Dit is de _final_ app voor het vak _Native App Studio_. Het is een app voor het _Rijksmuseum_. Voor deze app is de API gebruikt van het Rijksmuseum. In de Nederlandse app kunnen gebruikers _inloggen_ of zich _registreren_ met email, wachtwoord en gebruikersnaam. Dit is uitgevoerd door gebruik te maken van _Firebase,_ hier worden deze gegevens opgeslagen. Wanneer de gebruiker is ingelogd, komt de gebruiker op de _homepage_. Op deze pagina staan er _titels_ van items van de collectie van het Rijksmuseum weergeven. De gebruiker kan hierbij _klikken_ op een titel, waarna een nieuwe pagina verschijnt. 
+Dit is de _final_ app voor het vak _Native App Studio_. Het is een app voor het _Rijksmuseum_. Voor deze app is de API gebruikt van het Rijksmuseum. In de Nederlandse app kunnen gebruikers _inloggen_ of zich _registreren_ met email, wachtwoord en gebruikersnaam. Dit is uitgevoerd door gebruik te maken van _Firebase,_ hier worden deze gegevens opgeslagen en dit maakt het inloggen/uitloggen mogelijk. Wanneer de gebruiker is ingelogd, komt de gebruiker op de _homepage_. Op deze pagina staan er _titels_ van items van de collectie van het Rijksmuseum weergeven. De gebruiker kan hierbij _klikken_ op een titel, waarna een nieuwe pagina verschijnt. 
 
 ![alt text](https://github.com/LauraGeerars/LauraGeerarsFinalApp/blob/master/Schermafdruk%202017-12-15%2020.53.01.png)
 
