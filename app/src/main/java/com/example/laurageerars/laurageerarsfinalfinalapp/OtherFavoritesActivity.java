@@ -1,13 +1,29 @@
 package com.example.laurageerars.laurageerarsfinalfinalapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
-public class OtherFavoritesActivity extends AppCompatActivity {
+public class OtherFavoritesActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other_favorites);
+
+        final ImageView profiel = (ImageView) findViewById(R.id.profielfoto);
+
+        profiel.setOnClickListener(this);
     }
-}
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.profielfoto:
+                Intent intent = new Intent(this, ProfileActivity.class);
+                startActivity(intent);
+                break;
+        }
+    }}

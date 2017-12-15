@@ -23,9 +23,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -33,6 +36,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class InfoActivity extends AppCompatActivity implements View.OnClickListener {
     public ArrayList<String> listinfo = new ArrayList<String>();
@@ -45,6 +49,8 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
     DatabaseReference mDatabase = database.getReference();
     FirebaseUser currentUser;
     String favoritetitle;
+    String favoriteobjectnr;
+    List list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +90,7 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
 
                             favoritetitle = artObject.getString("title");
                             title.setText(favoritetitle);
+                            favoriteobjectnr = artObject.getString("objectNumber");
                             beschrijving.setText(artObject.getString("description"));
 
                             JSONObject imageObject = artObject.getJSONObject("webImage");
@@ -91,6 +98,8 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
                             //JSONObject makerObject = artObject.getJSONObject("principalMakers");
                             //maker.setText(makerObject.getString("scLabelLine"));
                             maker.setText(artObject.getString("principalOrFirstMaker"));
+                            //list.add(favoritetitle);
+                            //list.add(favoriteobjectnr);
 
 
 
@@ -132,11 +141,20 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.favoriet:
                 currentUser = mAuth.getCurrentUser();
-                //String title = titleview.getText().toString();
-                Favoriet favoriet = new Favoriet(favoritetitle);
-                mDatabase.child("favoriet").child(currentUser.getUid()).push().child(currentUser.getDisplayName()).setValue(favoriet);
+                //String title = list.get(0);
+                //String object = list.get(1);
+                //Favoriet favoriet = new Favoriet(title, object);
+                Favoriet favoriet = new Favoriet(favoritetitle, favoriteobjectnr);
+                mDatabase.child("favoriet").child(currentUser.getUid()).child(favoriteobjectnr).setValue(favoriet);
+                //mDatabase.child("favoriet").child(currentUser.getDisplayName()).child(object).setValue(title);
+                //mDatabase.child("favoriet").child(currentUser.getUid()).push().setValue(favoriet);
                 Toast.makeText(InfoActivity.this, "Schilderij toegevoegd aan favorieten!",
                         Toast.LENGTH_SHORT).show();
+
+            }
+
+
+
 
 
         }
@@ -145,5 +163,5 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-}
+
 
