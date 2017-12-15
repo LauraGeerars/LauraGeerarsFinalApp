@@ -90,8 +90,26 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     public void getFavorites() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         currentUser = mAuth.getCurrentUser();
-        final String user = currentUser.getDisplayName();
 
+        Intent intent = getIntent();
+        String otherUser = intent.getStringExtra("user");
+
+        if (otherUser == null) {
+            final String user = currentUser.getDisplayName();
+            getFavorites(user);
+            Log.d("true", user);
+        } else {
+            final TextView person = (TextView) findViewById(R.id.person);
+            final String user = otherUser;
+            person.setText("De favorieten van: " + user);
+            getFavorites(user);
+            Log.d("false", user);
+
+        }
+        //final String user = ("tom");
+    }
+
+    public void getFavorites(String user) {
         DatabaseReference mDatabase = database.getReferenceFromUrl("https://laurageerarsfinalfinalapp.firebaseio.com/favoriet/" + user);
         //fUID = database.getCurrentUser().getUid();
         mDatabase.addValueEventListener(new ValueEventListener() {
@@ -101,23 +119,14 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 for(DataSnapshot children : dataSnapshot.getChildren()) {
                     //Log.v("favoriet key","   " + children.getValue().toString());
                     Object values = children.getValue();
-                    //Log.v("favoriet key", "" + values.toString());
-                    //Favoriet favoriet = children.getValue(Favoriet.class);
-                   // Log.v("favoriet key", "" + children);
-                    //for(DataSnapshot child: children.getChildren());
-                        //Log.v("favoriet key","   " + dataSnapshot.getChildren());
-                        //Log.v("favoriet key","   " + children.getChildren());
                     String getvalues = values.toString();
-                    //Log.v("favoriet key","   " + getvalues);
-                    //if(values.toString().contains("title=")) {
                     String[] output = getvalues.split(",");
-                    //Log.v("favoriet key","   " + Arrays.toString(output));
-                    //Log.v("favoriet key","   " + output.length);
                     for (int i = 0; i < output.length; i++) {
                         String outputlol = output[i];
                         //Log.v("favoriet key", "   " + outputlol);
                         if (outputlol.contains("title=")) {
-                            listfavoriet.add(outputlol);
+                            String result = outputlol.substring(7, outputlol.length()-1);
+                            listfavoriet.add(result);
 
                             //Log.v("favoriet hoi", "   " + outputlol.toString());
                         }
@@ -137,6 +146,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         });
 
     }
+
+
 
     public void Adapter() {
         ListAdapter theAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listfavoriet);
