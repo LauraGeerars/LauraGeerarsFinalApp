@@ -104,7 +104,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 createUser();
                 break;
             case R.id.back_button:
-                startActivity(new Intent(this, UsernameActivity.class));
+                startActivity(new Intent(this, MainActivity.class));
                 break;
         }
 

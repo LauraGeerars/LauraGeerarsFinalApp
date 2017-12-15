@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,8 +35,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference mDatabase = database.getReference("title");
     //fUID = database.getCurrentUser().getUid();
-
+    FirebaseUser user;
     TextView favoriettest;
+    FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +89,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     public void getFavorites() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference mDatabase = database.getReferenceFromUrl("https://laurageerarsfinalfinalapp.firebaseio.com/favoriet");
+        currentUser = mAuth.getCurrentUser();
+        final String user = currentUser.getDisplayName();
+
+        DatabaseReference mDatabase = database.getReferenceFromUrl("https://laurageerarsfinalfinalapp.firebaseio.com/favoriet/" + user);
         //fUID = database.getCurrentUser().getUid();
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -103,29 +108,24 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         //Log.v("favoriet key","   " + dataSnapshot.getChildren());
                         //Log.v("favoriet key","   " + children.getChildren());
                     String getvalues = values.toString();
-                    Log.v("favoriet key","   " + getvalues);
+                    //Log.v("favoriet key","   " + getvalues);
                     //if(values.toString().contains("title=")) {
                     String[] output = getvalues.split(",");
-                    Log.v("favoriet key","   " + Arrays.toString(output));
-                    Log.v("favoriet key","   " + output.length);
+                    //Log.v("favoriet key","   " + Arrays.toString(output));
+                    //Log.v("favoriet key","   " + output.length);
                     for (int i = 0; i < output.length; i++) {
                         String outputlol = output[i];
                         //Log.v("favoriet key", "   " + outputlol);
                         if (outputlol.contains("title=")) {
                             listfavoriet.add(outputlol);
 
-                            Log.v("favoriet hoi", "   " + outputlol.toString());
+                            //Log.v("favoriet hoi", "   " + outputlol.toString());
                         }
                     }
                     Adapter();
 
 
-
                 }
-                /*
-                ListAdapter theAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listfavoriet);
-                ListView CollectionListView = (ListView) findViewById(R.id.favorietlijst);
-                CollectionListView.setAdapter(theAdapter);*/
             }
 
             @Override
@@ -144,35 +144,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         listViewFavoriet.setAdapter(theAdapter);
 
     }
-
-    /*
-    public void getFavorites() {
-        // Get a reference to our posts
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference();
-
-        // Attach a listener to read the data at our posts reference
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Favoriet favoriet = dataSnapshot.getValue(Favoriet.class);
-                System.out.println(favoriet);
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-    });
-    }/*
-    /*
-    public void Adapter() {
-        ArrayList<String> listmenu = getFavorites();
-        ListAdapter theAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listmenu);
-        ListView MenuListView = (ListView) findViewById(R.id.theOrderListView);
-        MenuListView.setAdapter(theAdapter);
-
-        });
-    }*/
 
 
     @Override

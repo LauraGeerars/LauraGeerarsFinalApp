@@ -32,6 +32,14 @@
 
     </LinearLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="Bekijk hier jouw favorieten!"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textSize="18sp" />
+
     <ListView
         android:id="@+id/favorietlijst"
         android:layout_width="match_parent"
