@@ -31,10 +31,8 @@ import java.util.regex.Pattern;
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth;
     public ArrayList<String> listfavoriet = new ArrayList<String>();
-    //public boolean startsWith(String output);
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference mDatabase = database.getReference("title");
-    //fUID = database.getCurrentUser().getUid();
     FirebaseUser user;
     TextView favoriettest;
     FirebaseUser currentUser;
@@ -46,7 +44,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         final ImageView profiel = (ImageView) findViewById(R.id.profielfoto);
         final Button loguit = (Button) findViewById(R.id.logout_button);
         final Button anderefavorieten = (Button) findViewById(R.id.otherfavoritesbutton);
-        //TextView favotest = (TextView) findViewById(R.id.favorietentest);
 
         final ListView listViewFavoriet = (ListView) findViewById(R.id.favorietlijst);
 
@@ -58,33 +55,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         getFavorites();
     }
 
-    /*
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                //favorietList.clear();
-                //favoriettest.clear();
-
-                for (DataSnapshot favorietSnapshot : dataSnapshot.getChildren()) {
-                    Favoriet favoriet = favorietSnapshot.getValue(Favoriet.class);
-
-                    favorietList.add(favoriet);
-                    //favoriettest.(favoriet);
-                }
-
-                FavorietList adapter = new FavorietList(ProfileActivity.this, favorietList);
-                listViewFavoriet.setAdapter(adapter);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }*/
 
 
     public void getFavorites() {
@@ -111,13 +81,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     public void getFavorites(String user) {
         DatabaseReference mDatabase = database.getReferenceFromUrl("https://laurageerarsfinalfinalapp.firebaseio.com/favoriet/" + user);
-        //fUID = database.getCurrentUser().getUid();
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //Log.v("favoriet key","   " + dataSnapshot);
                 for(DataSnapshot children : dataSnapshot.getChildren()) {
-                    //Log.v("favoriet key","   " + children.getValue().toString());
                     Object values = children.getValue();
                     String getvalues = values.toString();
                     String[] output = getvalues.split(",");
@@ -127,12 +95,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         if (outputlol.contains("title=")) {
                             String result = outputlol.substring(7, outputlol.length()-1);
                             listfavoriet.add(result);
-
-                            //Log.v("favoriet hoi", "   " + outputlol.toString());
                         }
                     }
                     Adapter();
-
 
                 }
             }
@@ -147,15 +112,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-
-
     public void Adapter() {
         ListAdapter theAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listfavoriet);
         ListView listViewFavoriet = (ListView) findViewById(R.id.favorietlijst);
         listViewFavoriet.setAdapter(theAdapter);
 
     }
-
 
     @Override
     public void onClick(View view) {

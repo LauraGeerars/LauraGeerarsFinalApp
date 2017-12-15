@@ -58,29 +58,6 @@ public class OtherFavoritesActivity extends AppCompatActivity implements View.On
                         listfavorietanderen.add(children.getKey());
                     }
 
-                    //Log.v("favoriet anderen","   " + user);
-                    //Object values = children.getValue();
-                    //Log.v("favoriet key", "" + values.toString());
-                    //Favoriet favoriet = children.getValue(Favoriet.class);
-                    // Log.v("favoriet key", "" + children);
-                    //for(DataSnapshot child: children.getChildren());
-                    //Log.v("favoriet key","   " + dataSnapshot.getChildren());
-                    //Log.v("favoriet key","   " + children.getChildren());
-                    //String getvalues = values.toString();
-                    //Log.v("favoriet key","   " + getvalues);
-                    //if(values.toString().contains("title=")) {
-                    //String[] output = getvalues.split(",");
-                    //Log.v("favoriet key","   " + Arrays.toString(output));
-                    //Log.v("favoriet key","   " + output.length);
-                    //for (int i = 0; i < output.length; i++) {
-                    //    String outputlol = output[i];
-                    //    //Log.v("favoriet key", "   " + outputlol);
-                    //    if (outputlol.contains("title=")) {
-                    //        listfavorietanderen.add(outputlol);
-
-                    //        Log.v("favoriet hoi", "   " + outputlol.toString());
-                //}
-                 //   }
                     Adapter();
 
 
@@ -113,15 +90,6 @@ public class OtherFavoritesActivity extends AppCompatActivity implements View.On
             }
         });
     }
-
-    /*
-    // Function for going to next activity (InfoActivity)
-    public void gotoFavoActivity(String FavoOtherListActivity){
-        Intent intent = new Intent(this, FavoOtherListActivity.class);
-        intent.putExtra("FavoOtherListActivity", FavoOtherListActivity);
-        startActivity(intent);
-    }*/
-
 
 
     @Override

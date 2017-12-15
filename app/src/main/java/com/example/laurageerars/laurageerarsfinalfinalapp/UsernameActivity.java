@@ -32,26 +32,6 @@ public class UsernameActivity extends AppCompatActivity implements View.OnClickL
         mAuth = FirebaseAuth.getInstance();
     }
 
-    /*
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is logged in (non-null), give toast en go to homepage
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-
-        if (currentUser != null) {
-
-            Toast.makeText(this, "Ingelogd!", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, HomepageActivity.class);
-            startActivity(intent);
-        }
-        // If user is not logged in, give toast en log in or create new account
-        else {
-
-            Toast.makeText(this, "Er moet eerst worden ingelogd.", Toast.LENGTH_SHORT).show();
-        }
-
-    }*/
 
     private void saveUsername() {
         final String displayname = usernameField.getText().toString();

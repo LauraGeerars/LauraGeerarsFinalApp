@@ -52,8 +52,6 @@ public class HomepageActivity extends AppCompatActivity implements View.OnClickL
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        //test.setText("Response is: "+ response.substring(0,500));
                         try {
                             JSONObject newObject = (JSONObject) new JSONObject(response);
                             ArrayList<JSONObject> listcollection = new ArrayList<JSONObject>();
@@ -128,11 +126,6 @@ public class HomepageActivity extends AppCompatActivity implements View.OnClickL
         intent.putExtra("InfoActivity", InfoActivity);
         startActivity(intent);
     }
-    /*
-    public void ProfileClick(View view) {
-        Intent intent = new Intent(this, ProfileActivity.class);
-        startActivity(intent);
-    } */
 
     //On click function for buttons
     @Override

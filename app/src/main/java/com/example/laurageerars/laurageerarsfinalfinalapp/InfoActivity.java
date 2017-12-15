@@ -81,8 +81,6 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        //test.setText("Response is: "+ response.substring(0,500));
                         try {
                             JSONObject newObject = (JSONObject) new JSONObject(response);
 
@@ -95,18 +93,10 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
 
                             JSONObject imageObject = artObject.getJSONObject("webImage");
                             addImage(imageObject.getString("url"));
-                            //JSONObject makerObject = artObject.getJSONObject("principalMakers");
-                            //maker.setText(makerObject.getString("scLabelLine"));
                             maker.setText(artObject.getString("principalOrFirstMaker"));
-                            //list.add(favoritetitle);
-                            //list.add(favoriteobjectnr);
-
-
-
 
 
                         } catch (JSONException e) {
-                            //mTextView.setText(e.toString());
                             e.printStackTrace();
 
 
@@ -129,9 +119,6 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-
-
-
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -141,13 +128,8 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.favoriet:
                 currentUser = mAuth.getCurrentUser();
-                //String title = list.get(0);
-                //String object = list.get(1);
-                //Favoriet favoriet = new Favoriet(title, object);
                 Favoriet favoriet = new Favoriet(favoritetitle, favoriteobjectnr);
                 mDatabase.child("favoriet").child(currentUser.getDisplayName()).child(favoriteobjectnr).setValue(favoriet);
-                //mDatabase.child("favoriet").child(currentUser.getDisplayName()).child(object).setValue(title);
-                //mDatabase.child("favoriet").child(currentUser.getUid()).push().setValue(favoriet);
                 Toast.makeText(InfoActivity.this, "Schilderij toegevoegd aan favorieten!",
                         Toast.LENGTH_SHORT).show();
 
