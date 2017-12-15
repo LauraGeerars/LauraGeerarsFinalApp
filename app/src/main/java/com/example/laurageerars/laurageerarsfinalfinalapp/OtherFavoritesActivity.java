@@ -20,47 +20,51 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
+
+// Activity for retrieving other users their username.
+// This is for adding other users to a listview, so an user can look at other users favorites.
+// Help with retrieving data out of firebase: https://stackoverflow.com/questions/37919455/how-to-get-string-from-firebase-realtime-db-that-contain-in-unique-key
 
 public class OtherFavoritesActivity extends AppCompatActivity implements View.OnClickListener {
     public ArrayList<String> listfavorietanderen = new ArrayList<String>();
-    FirebaseAuth mAuth;
-    FirebaseUser currentUser;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other_favorites);
-        final ListView listViewFavorietAnderen = (ListView) findViewById(R.id.favorietlijst);
-
         final ImageView profiel = (ImageView) findViewById(R.id.profielfoto);
 
+        // Setting on click to profile imageview.
         profiel.setOnClickListener(this);
+
         getFavoritesOthers();
     }
 
+    // Function for retrieving other users their username out of Firebase.
     public void getFavoritesOthers() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        // Put the username into a string.
         final String user = currentUser.getDisplayName();
+
+        // Get database reference.
         DatabaseReference mDatabase = database.getReferenceFromUrl("https://laurageerarsfinalfinalapp.firebaseio.com/favoriet/" );
-        //fUID = database.getCurrentUser().getUid();
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //Log.v("favoriet anderen key","   " + dataSnapshot);
+                // For favorites in database, get children (in this case the username)
                 for(DataSnapshot children : dataSnapshot.getChildren()) {
                     Log.v("favoriet anderen","   " + user);
+                    // If the "child" username doesn't match with the current user, add it to the listview.
+                    // This is for 'deleting' the current user out of the other favorites activity.
                     if(!Objects.equals(children.getKey(), user)) {
                         listfavorietanderen.add(children.getKey());
                     }
-
+                    // Setting the adapter to create the listview.
                     Adapter();
-
-
                 }
             }
 
@@ -68,12 +72,11 @@ public class OtherFavoritesActivity extends AppCompatActivity implements View.On
             public void onCancelled(DatabaseError databaseError) {
                 // Getting Post failed, log a message
                 Log.w("Cancelled", "loadPost:onCancelled", databaseError.toException());
-                // ...
             }
         });
-
     }
 
+    //Function for adding the usernames of other users to a listview.
     public void Adapter() {
         ListAdapter theAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listfavorietanderen);
         ListView listViewFavorietAnderen = (ListView) findViewById(R.id.favorietanderenlijst);
@@ -81,17 +84,16 @@ public class OtherFavoritesActivity extends AppCompatActivity implements View.On
         listViewFavorietAnderen.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //gotoFavoActivity(adapterView.getItemAtPosition(i));
                 Intent intent = new Intent(OtherFavoritesActivity.this, ProfileActivity.class);
-                //intent.putExtra("FavoOtherListActivity", FavoOtherListActivity);
+                // For 'sending' the right user, the user clicked on, to the profile activity.
                 intent.putExtra("user", String.valueOf(adapterView.getItemAtPosition(i)));
                 startActivity(intent);
-
             }
         });
     }
 
 
+    // On click function for going to the profile of the user.
     @Override
     public void onClick(View view) {
         switch (view.getId()) {

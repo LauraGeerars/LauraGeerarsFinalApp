@@ -2,6 +2,8 @@ package com.example.laurageerars.laurageerarsfinalfinalapp;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+// Activity for defining the class Favoriet in Firebase.
+
 @IgnoreExtraProperties
 public class Favoriet {
     public String title;
@@ -11,7 +13,7 @@ public class Favoriet {
 
     }
 
-    //Create Favoriet object, with title as value which has to be saved
+    // Create Favoriet object, with title and objectnumber as value which has to be saved
     public Favoriet(String title, String objectNumber) {
         this.title = title;
         this.objectNumber = objectNumber;
@@ -19,9 +21,5 @@ public class Favoriet {
 
     public String getTitle() {
         return title;
-    }
-
-    public String getObjectNumber() {
-        return objectNumber;
     }
 }

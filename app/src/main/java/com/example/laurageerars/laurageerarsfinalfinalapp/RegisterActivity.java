@@ -15,8 +15,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
+
+// Activity for register a new user to the app (and so to Firebase).
+// Register with help from: https://www.simplifiedcoding.net/android-firebase-tutorial-1/
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth;
@@ -26,9 +27,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     Button backButton;
     EditText emailField;
     EditText passwordField;
-
-
-    //Register with help from: https://www.simplifiedcoding.net/android-firebase-tutorial-1/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,59 +42,57 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         emailField = (EditText) findViewById(R.id.email);
         passwordField = (EditText) findViewById(R.id.password);
 
-
-        //Fixing on click at buttons on page
+        //Setting views for buttons to on clicks.
         registerButton.setOnClickListener(this);
         backButton.setOnClickListener(this);
     }
 
+    // Function for creating user in Firebase.
     private void createUser() {
         String email = emailField.getText().toString().trim();
         String password = passwordField.getText().toString().trim();
 
-        //checking if email field is empty
+        // Checking if email field is empty, if so, give toast.
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(this,"Vul een geldig emailadres in.",Toast.LENGTH_LONG).show();
             return;
         }
 
-        //checking if password field is empty
+        // Checking if password field is empty, if so, give toast.
         if (TextUtils.isEmpty(password)) {
             Toast.makeText(this,"Vul een wachtwoord in.",Toast.LENGTH_LONG).show();
             return;
         }
 
-        //checking if password is longer than 6 characters
+        //checking if password is longer than 6 characters, if not, give toast.
         if (password.length() < 6 ) {
             Toast.makeText(this,"Vul een wachtwoord in die bestaat uit minimaal 6 karakters.",Toast.LENGTH_LONG).show();
             return;
         }
 
-        //create a new user
+        // Create a new user into Firebase.
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
+                            // Register success, go to the username activity to set an username.
                             Log.d("Register successful", "createUserWithEmail:success");
                             Toast.makeText(RegisterActivity.this,"Succesvol geregistreerd!",Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(RegisterActivity.this, UsernameActivity.class);
                             startActivity(intent);
                         }
                         else {
-                            // If sign in fails, display a message to the user.
+                            // If register fails, display a message to the user.
                             Log.w("Register failure", "createUserWithEmail:failure", task.getException());
                             Toast.makeText(RegisterActivity.this, "Er is iets foutgegaan met registreren.",
                                     Toast.LENGTH_SHORT).show();
                         }
-
-                        // ...
                     }
                 });
     }
 
-    //On click function for buttons
+    // On click function for register user, or going back and go to the main activity to log in.
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -107,6 +103,5 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(new Intent(this, MainActivity.class));
                 break;
         }
-
     }
 }

@@ -2,7 +2,6 @@ package com.example.laurageerars.laurageerarsfinalfinalapp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,23 +23,21 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
-
 import java.util.ArrayList;
+
+// Activity for the homepage, user comes here when they register or log in.
+// It shows items from the collection of the Rijksmuseum, Amsterdam, in a listview from the API.
 
 
 public class HomepageActivity extends AppCompatActivity implements View.OnClickListener{
     public ArrayList<String> listcollection = new ArrayList<String>();
-    public ListView CollectionListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
-        final ListView CollectionListView = (ListView) findViewById(R.id.ListViewCollection);
         final TextView test = (TextView) findViewById(R.id.test);
         final ImageView profiel = (ImageView) findViewById(R.id.profielfoto);
-
         profiel.setOnClickListener(this);
 
         // Instantiate the RequestQueue.
@@ -52,24 +49,21 @@ public class HomepageActivity extends AppCompatActivity implements View.OnClickL
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        // Try to get jsonObject title out of the jsonArray 'artObjects' from the API.
                         try {
                             JSONObject newObject = (JSONObject) new JSONObject(response);
-                            ArrayList<JSONObject> listcollection = new ArrayList<JSONObject>();
                             JSONArray collectionArray = newObject.getJSONArray("artObjects");
                             for (int i = 0; i < collectionArray.length(); i++) {
                                 JSONObject jsonObject = collectionArray.getJSONObject(i);
                                 addItem(jsonObject.getString("title"));
+                                // Save the unique objectNumber from a collection item for fixing the new API url for next activity.
                                 savetoSharedPrefs(jsonObject.getString("title"), jsonObject.getString("objectNumber"));
-
                             }
+                            // Setting the adapter to create a listview.
                             Adapter();
                         } catch (JSONException e) {
-                            //mTextView.setText(e.toString());
                             e.printStackTrace();
-
-
                         }
-
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -77,26 +71,25 @@ public class HomepageActivity extends AppCompatActivity implements View.OnClickL
                 test.setText("That didn't work!");
             }
         });
-// Add the request to the RequestQueue.
+
+        // Add the request to the RequestQueue.
         queue.add(stringRequest);
     }
 
-        //function for adding item to list categories
-        public void addItem(String Item){
+    // Function for adding item to the collection item list.
+    public void addItem(String Item){
+        listcollection.add(Item);
+    }
 
-            listcollection.add(Item);
-
-        }
-
+    // Function for saving the title and objectNumber, this is for fixing the API url for the next activity.
     public void savetoSharedPrefs(String title, String objectnumber) {
         SharedPreferences prefs = getSharedPreferences("title", MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = prefs.edit();
         prefsEditor.putString(title, objectnumber);
         prefsEditor.commit();
-
     }
 
-
+    // Function for adding the title of collection item to the listview.
     public void Adapter() {
         ListAdapter theAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listcollection);
         ListView CollectionListView = (ListView) findViewById(R.id.ListViewCollection);
@@ -104,7 +97,7 @@ public class HomepageActivity extends AppCompatActivity implements View.OnClickL
         CollectionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                // Title and objectnumber as shared preferences, so the url for extra info can be made and used in InfoActivity
+                // Title and objectnumber as shared preferences, so the url for extra info can be made and used in InfoActivity.
                 SharedPreferences yourOrderPrefs = getApplicationContext().getSharedPreferences("title", MODE_PRIVATE);
                 String objectnumber = yourOrderPrefs.getString(String.valueOf(adapterView.getItemAtPosition(i)), null);
                 if (objectnumber != null) {
@@ -112,22 +105,19 @@ public class HomepageActivity extends AppCompatActivity implements View.OnClickL
                             "?key=e53vvaf0&format=json";
                     Log.d("url", url);
                     gotoInfoActivity(url);
-
                 }
-
-
             }
         });
     }
 
-    // Function for going to next activity (InfoActivity)
+    // Function for going to next activity for showing more information about an item, called InfoActivity.
     public void gotoInfoActivity(String InfoActivity){
         Intent intent = new Intent(this, InfoActivity.class);
         intent.putExtra("InfoActivity", InfoActivity);
         startActivity(intent);
     }
 
-    //On click function for buttons
+    //On click function for going to the profile activity of a user.
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -136,10 +126,7 @@ public class HomepageActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(intent);
                 break;
         }
-
     }
-
-
 }
 
 

@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:text="Bekijk hier iedereen zijn/haar favorieten!"
+        android:text="Bekijk hier favorieten van anderen!"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textSize="18sp" />
 
