@@ -32,12 +32,6 @@
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="favorieten"
-        android:id="@+id/favorietentest"/>
-
     <ListView
         android:id="@+id/favorietlijst"
         android:layout_width="match_parent"

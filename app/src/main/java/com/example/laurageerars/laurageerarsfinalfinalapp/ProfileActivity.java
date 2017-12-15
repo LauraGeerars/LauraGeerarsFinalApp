@@ -1,13 +1,16 @@
 package com.example.laurageerars.laurageerarsfinalfinalapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,13 +29,12 @@ import java.util.regex.Pattern;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth;
+    public ArrayList<String> listfavoriet = new ArrayList<String>();
     //public boolean startsWith(String output);
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference mDatabase = database.getReference("title");
     //fUID = database.getCurrentUser().getUid();
 
-    ListView listViewFavoriet;
-    List<Favoriet> favorietList;
     TextView favoriettest;
 
     @Override
@@ -42,10 +44,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         final ImageView profiel = (ImageView) findViewById(R.id.profielfoto);
         final Button loguit = (Button) findViewById(R.id.logout_button);
         final Button anderefavorieten = (Button) findViewById(R.id.otherfavoritesbutton);
-        TextView favotest = (TextView) findViewById(R.id.favorietentest);
+        //TextView favotest = (TextView) findViewById(R.id.favorietentest);
 
-        listViewFavoriet = (ListView) findViewById(R.id.favorietlijst);
-        favorietList = new ArrayList<>();
+        final ListView listViewFavoriet = (ListView) findViewById(R.id.favorietlijst);
+
         mAuth = FirebaseAuth.getInstance();
 
         profiel.setOnClickListener(this);
@@ -110,17 +112,20 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         String outputlol = output[i];
                         //Log.v("favoriet key", "   " + outputlol);
                         if (outputlol.contains("title=")) {
+                            listfavoriet.add(outputlol);
 
                             Log.v("favoriet hoi", "   " + outputlol.toString());
-                            //favoriettest.setText(outputlol);
                         }
                     }
+                    Adapter();
+
 
 
                 }
-                // Get Post object and use the values to update the UI
-                Favoriet favoriet = dataSnapshot.getValue(Favoriet.class);
-                // ...
+                /*
+                ListAdapter theAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listfavoriet);
+                ListView CollectionListView = (ListView) findViewById(R.id.favorietlijst);
+                CollectionListView.setAdapter(theAdapter);*/
             }
 
             @Override
@@ -130,6 +135,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 // ...
             }
         });
+
+    }
+
+    public void Adapter() {
+        ListAdapter theAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listfavoriet);
+        ListView listViewFavoriet = (ListView) findViewById(R.id.favorietlijst);
+        listViewFavoriet.setAdapter(theAdapter);
 
     }
 
